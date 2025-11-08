@@ -43,3 +43,109 @@ key lets react identify specific product are order etc without it it may misinte
 
 What is the virtual DOM, and why does React use it?
 react DOM creates a virtual DOM to make the react faster for rendering 
+
+
+
+
+
+
+//challenges
+✅ Challenge 1 — Correct
+
+Your Welcome component is perfect.
+
+✅ Challenge 2 — Correct
+
+Parent-to-child props passing is correct and clean.
+
+❌ Challenge 3 — Needs Fixes
+
+You made two mistakes:
+
+Mistake 1: Passing props incorrectly
+
+You wrote:
+
+<RenderListChild skills/>
+
+
+This does nothing.
+Correct way:
+
+<RenderListChild skills={skills} />
+
+Mistake 2: Child component is wrong
+
+You wrote:
+
+<h1 key={props.id}>{props.map(m => m)}</h1>
+
+
+Issues:
+
+props is an object, not an array → props.skills
+
+You must render each skill separately
+
+You cannot place multiple items inside one <h1>
+
+props.id doesn’t exist
+
+✅ Correct Code:
+
+function RenderListParent() {
+  const skills = ["React", "Node", "MongoDB"];
+  return <RenderListChild skills={skills} />;
+}
+
+function RenderListChild(props) {
+  return (
+    <div>
+      {props.skills.map((skill, index) => (
+        <p key={index}>{skill}</p>
+      ))}
+    </div>
+  );
+}
+
+export default RenderListParent;
+
+✅ Challenge 4 — Correct
+
+Your fixed JSX is perfect.
+
+❌ Challenge 5 — Needs Fixes
+
+Mistakes:
+
+Mistake 1: Spread operator is wrong
+<UserLoginInChild {...isloggedIn ? true : false}/>
+
+
+isloggedIn is undefined
+
+You are spreading boolean values → invalid JSX
+
+Mistake 2: Child receives props incorrectly
+
+You wrote:
+
+<h1>{props}</h1>
+
+
+Props is an object — not a string → this prints [object Object].
+
+✅ Correct Version
+function UserLoginInParent() {
+  const isLoggedIn = true; // or false
+
+  return <UserLoginInChild isLoggedIn={isLoggedIn} />;
+}
+
+function UserLoginInChild({ isLoggedIn }) {
+  return (
+    <h1>{isLoggedIn ? "Logged in" : "Please log in"}</h1>
+  );
+}
+
+export default UserLoginInParent;
